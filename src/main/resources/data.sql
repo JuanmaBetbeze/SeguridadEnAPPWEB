@@ -1,0 +1,2 @@
+--INSERT INTO SeguridadAPPWeb.custom_user (username, password) VALUES ('administrador', 'admin123');
+--INSERT INTO SeguridadAPPWeb.custom_user (username, password) VALUES ('usuarioComun', 'user123');
