@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Welcome</title>
+    <title>Welcome Page</title>
 </head>
 <body>
-<h1>Welcome</h1>
-<p th:text="'Welcome, ' + ${user.getUsername()} + '!'"></p>
-<p th:text=" ${user.getRol()} "></p>
+<h1>Welcome, <span th:text="${user.username}"></span>!</h1>
+<p>User, <span th:text="${user.rol}"></span>!</p>
+
+<!-- Mostrar botón solo si el usuario es admin -->
+<div th:if="${user.getRol() == user.getRol().ADMIN}">
+    <form action="/welcome/admin" method="get">
+        <button type="submit">Admin Panel</button>
+    </form>
+</div>
+
+<p><a href="/login">Logout</a></p>
 </body>
 </html>
