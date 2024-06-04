@@ -1,6 +1,5 @@
 package Seguridad_en_APP_Web.demo.service;
 
-
 import Seguridad_en_APP_Web.demo.model.CustomUser;
 import Seguridad_en_APP_Web.demo.model.Rol;
 import Seguridad_en_APP_Web.demo.repository.CustomUserRepository;
@@ -14,11 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class CustomUserService {
