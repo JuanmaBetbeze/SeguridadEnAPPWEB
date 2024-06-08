@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="public/assets/css/main.css" />
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="public/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
+</head>
+<body class="is-preload homepage">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <div id="header-wrapper">
+        <header id="header" class="container">
+
+            <!-- Logo -->
+            <div id="logo" >
+                <h1>TP Seguridad</h1>
+                <span></span>
+            </div>
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="loginprueba.html">Login</a></li>
+                </ul>
+            </nav>
+
+        </header>
+    </div>
+
+    <!-- Banner -->
+    <div id="banner-wrapper">
+        <div id="banner" class="box container">
+            <div class="row">
+                <div class="col-7 col-12-medium">
+                    <h2>Welcome, <span th:text="${user.username}"></span>!</h2>
+                    <p>User, <span th:text="${user.rol}"></span>!</p>
+                </div>
+                <div class="col-5 col-12-medium" th:if="${user.getRol() == user.getRol().ADMIN}">
+                    <form action="/welcome/admin" method="get">
+                        <button type="submit" style="width: 360px;"><a class="button large icon solid fa-arrow-circle-right" style="text-align: left;">Admin Panel</a></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+
+<script src="public/assets/js/jquery.min.js"></script>
+<script src="public/assets/js/jquery.dropotron.min.js"></script>
+<script src="public/assets/js/browser.min.js"></script>
+<script src="public/assets/js/breakpoints.min.js"></script>
+<script src="public/assets/js/util.js"></script>
+<script src="public/assets/js/main.js"></script>
+
+</body>
+</html>

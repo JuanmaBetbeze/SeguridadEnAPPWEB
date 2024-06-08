@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signup</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="public/assets/css/main.css" />
+</head>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="inactive underlineHover login_title"><a href="loginprueba.html"> Sign In <a></h2>
+        <h2 class="active underlineHover login_title">Sign Up </h2>
+
+        <!-- Icon -->
+        <div class="fadeIn first userIcon" >
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfn92Uz0WoedKHZbOdgPrHJKS9lP90htuueQ&usqp=CAU" id="icon" alt="User Icon" />
+        </div>
+
+        <!-- Login Form -->
+        <form th:action="@{/register}" th:object="${custom_user}" method="post">
+            <input type="text" id="username" class="fadeIn second" th:field="*{username}" placeholder="Username">
+            <input type="text" id="password" class="fadeIn third" th:field="*{password}" placeholder="Password">
+            <input type="submit" class="fadeIn fourth" value="Sign Up">
+        </form>
+
+    </div>
+</div>
+</html>
