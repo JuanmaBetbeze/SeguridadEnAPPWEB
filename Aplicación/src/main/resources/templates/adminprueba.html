@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Panel</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="public/assets/css/main.css" />
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="public/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
+</head>
+<body class="is-preload homepage">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <div id="header-wrapper">
+        <header id="header" class="container">
+
+            <!-- Logo -->
+            <div id="logo" >
+                <h1>TP Seguridad</h1>
+                <span></span>
+            </div>
+
+
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="welcomeprueba.html">Home</a></li>
+                    <li><a href="loginprueba.html">Login</a></li>
+                </ul>
+            </nav>
+
+        </header>
+    </div>
+
+    <!-- Banner -->
+
+    <div id="banner-wrapper">
+        <div id="banner" class="box container">
+            <h1>Admin Page</h1>
+            <p style="font-size: 20px;">Usuarios</p>
+            <table>
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.password}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+
+<script src="public/assets/js/jquery.min.js"></script>
+<script src="public/assets/js/jquery.dropotron.min.js"></script>
+<script src="public/assets/js/browser.min.js"></script>
+<script src="public/assets/js/breakpoints.min.js"></script>
+<script src="public/assets/js/util.js"></script>
+<script src="public/assets/js/main.js"></script>
+
+</body>
+</html>
