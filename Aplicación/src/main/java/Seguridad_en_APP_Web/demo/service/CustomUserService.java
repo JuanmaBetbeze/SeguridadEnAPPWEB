@@ -1,7 +1,9 @@
 package Seguridad_en_APP_Web.demo.service;
 
+import Seguridad_en_APP_Web.demo.model.CreditCard;
 import Seguridad_en_APP_Web.demo.model.CustomUser;
 import Seguridad_en_APP_Web.demo.model.Rol;
+import Seguridad_en_APP_Web.demo.repository.CreditCardRepository;
 import Seguridad_en_APP_Web.demo.repository.CustomUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,19 +13,25 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CustomUserService {
+    @Autowired
+    private Validator validator;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private CustomUserRepository customUserRepository;
+
+    @Autowired
+    private CreditCardRepository creditCardRepository;
 
 
 
@@ -87,21 +95,24 @@ public class CustomUserService {
         return null;
     }
     public void updateUserRole(String username, Rol newRole) {
-        Optional<CustomUser> userOptional = customUserRepository.findByUsername(username);
-        if (userOptional.isPresent()) {
-            CustomUser user = userOptional.get();
-            user.setRol(newRole);
-            customUserRepository.save(user);
+        CustomUser userOptional = customUserRepository.findByUsername(username);
+        if (userOptional!=null) {
+            userOptional.setRol(newRole);
+            customUserRepository.save(userOptional);
         }
     }
     public List<CustomUser> getAllUsers() {
         return customUserRepository.findAll();
     }
-    public void generateUser(String username,String password,Rol rol){
+    public void generateUser(String username,String password,Rol rol,String nombre,String apellido,Date fecha){
         CustomUser user= new CustomUser();
         user.setUsername(username);
         user.setPassword(password);
         user.setRol(rol);
+        user.setNombre(nombre);
+        user.setApellido(apellido);
+        user.setFechaNacimiento(fecha);
+        user.setCreditCards(new ArrayList<>());
         customUserRepository.save(user);
     }
 
@@ -135,11 +146,30 @@ public class CustomUserService {
         return storedPassword.equals(recalculatedHash);
     }
     public void changePassword(String username,String newPassword){
-        Optional<CustomUser> customUser= customUserRepository.findByUsername(username);
-        if(customUser.isPresent()){
-            CustomUser user = customUser.get();
-            user.setPassword(newPassword);
-            customUserRepository.save(user);
+        CustomUser customUser= customUserRepository.findByUsername(username);
+        if(customUser!=null){
+            customUser.setPassword(newPassword);
+            customUserRepository.save(customUser);
         }
+    }
+    public void addCreditCardToUser(String userName, String cardNumber, String cardHolderName,int cvv,int montoDispo) {
+        CustomUser user = customUserRepository.findByUsername(userName);
+        if(user==null) throw new RuntimeException("User not found");
+        CreditCard creditCard = new CreditCard();
+        creditCard.setCardNumber(cardNumber);
+        creditCard.setCardHolderName(cardHolderName);
+        creditCard.setCustomUser(user);
+        creditCard.setCvv(cvv);
+        creditCard.setMontoDisponible(montoDispo);
+
+        Set<ConstraintViolation<CreditCard>> violations = validator.validate(creditCard);
+        if (!violations.isEmpty()) {
+            throw new RuntimeException("Invalid credit card data");
+        }
+        creditCardRepository.save(creditCard);
+    }
+
+    public List<CreditCard> getCreditCardsForUser(Integer userId) {
+        return creditCardRepository.findByCustomUserId(userId);
     }
 }

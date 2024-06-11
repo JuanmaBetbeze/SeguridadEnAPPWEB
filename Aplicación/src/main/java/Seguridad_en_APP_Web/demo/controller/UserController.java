@@ -29,7 +29,7 @@ public class UserController {
         Cookie cookie = new Cookie("isAdmin", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        return "login";
+        return "loginprueba";
     }
 
     @PostMapping("/login")
@@ -42,7 +42,7 @@ public class UserController {
             return "redirect:/welcome";
         }
         model.addAttribute("error", "Invalid username or password");
-        return "login";
+        return "loginprueba";
     }
     @GetMapping("/welcome")
     public String showWelcomePage(HttpServletRequest request, Model model) {
@@ -63,7 +63,7 @@ public class UserController {
             }
         }
         model.addAttribute("user", user);
-        return "welcome";
+        return "welcomeprueba";
     }
 
     @GetMapping("/updateCommonUser")
@@ -91,6 +91,6 @@ public class UserController {
             return "redirect:/login";
         }
         model.addAttribute("users", customUserService.getAllUsers());
-        return "admin";
+        return "adminprueba";
     }
 }
