@@ -20,8 +20,8 @@ public class CustomUser {
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
 
-    @OneToMany(mappedBy = "customUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CreditCard> creditCards;
+    @OneToOne(mappedBy = "customUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private CreditCard creditCard;
 
     public String getUsername() {
         return username;
@@ -47,6 +47,7 @@ public class CustomUser {
     public void setId(int id) {
         this.id = id;
     }
+
     public Rol getRol() {
         return rol;
     }
@@ -79,11 +80,13 @@ public class CustomUser {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<CreditCard> getCreditCards() {
-        return creditCards;
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 
-    public void setCreditCards(List<CreditCard> creditCards) {
-        this.creditCards = creditCards;
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 }
+
+

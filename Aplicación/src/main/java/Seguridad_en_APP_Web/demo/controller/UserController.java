@@ -93,4 +93,6 @@ public class UserController {
         model.addAttribute("users", customUserService.getAllUsers());
         return "adminprueba";
     }
+
+
 }

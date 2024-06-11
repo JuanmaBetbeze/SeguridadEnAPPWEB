@@ -31,7 +31,7 @@ public class CreditCard {
 
     private int montoDisponible;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private CustomUser customUser;
 

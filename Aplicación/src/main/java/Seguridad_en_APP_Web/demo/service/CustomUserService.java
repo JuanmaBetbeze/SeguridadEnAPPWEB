@@ -112,7 +112,6 @@ public class CustomUserService {
         user.setNombre(nombre);
         user.setApellido(apellido);
         user.setFechaNacimiento(fecha);
-        user.setCreditCards(new ArrayList<>());
         customUserRepository.save(user);
     }
 
@@ -167,9 +166,38 @@ public class CustomUserService {
             throw new RuntimeException("Invalid credit card data");
         }
         creditCardRepository.save(creditCard);
+        user.setCreditCard(creditCard);
+        customUserRepository.save(user);
     }
 
-    public List<CreditCard> getCreditCardsForUser(Integer userId) {
+    public CreditCard getCreditCardForUser(Integer userId) {
         return creditCardRepository.findByCustomUserId(userId);
+    }
+    public void transferMoney(String usernameINI,String usernameFIN,int cvv,int amount){
+        CustomUser user1 = customUserRepository.findByUsername(usernameINI);
+        CustomUser user2 = customUserRepository.findByUsername(usernameFIN);
+        if(user1==null || user2==null)throw new RuntimeException("User not found");
+        else {
+            CreditCard card1=user1.getCreditCard();
+            if (card1.getCvv()!=cvv){
+                throw new RuntimeException("Cvv incorrect");
+            }
+            else {
+                CreditCard card2= user2.getCreditCard();
+                if (amount>card1.getMontoDisponible()){
+                    throw new RuntimeException("You don't have this amount to transfer");
+                }
+                else {
+                    card1.setMontoDisponible(card1.getMontoDisponible()-amount);
+                    card2.setMontoDisponible(card2.getMontoDisponible()+amount);
+                    creditCardRepository.save(card1);
+                    creditCardRepository.save(card2);
+                    user1.setCreditCard(card1);
+                    customUserRepository.save(user1);
+                    user2.setCreditCard(card2);
+                    customUserRepository.save(user2);
+                }
+            }
+        }
     }
 }
