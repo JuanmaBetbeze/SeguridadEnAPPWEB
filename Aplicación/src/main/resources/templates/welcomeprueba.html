@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Welcome</title>
+    <title>Welcome| UTN</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet"  href="/css/main.css" />
+    <link rel="stylesheet" href="/css/main.css" />
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/fontawesome-free-5.15.4-web/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/css/fontawesome.min.css">
 </head>
 <body class="is-preload homepage">
 <div id="page-wrapper">
@@ -19,13 +19,15 @@
 
             <!-- Logo -->
             <div id="logo" >
-                <h1>TP Seguridad</h1>
+                <h1>UTN BANK</h1>
                 <span></span>
             </div>
 
             <nav id="nav">
                 <ul>
-                    <li><a href="loginprueba.html">Login</a></li>
+                    <li th:if="${user.getRol() == user.getRol().ADMIN}"><a href="/welcome/admin">Admin Panel</a></li>
+                    <li><a href="micuenta.html">Mi Cuenta</a></li>
+                    <li><a href="loginprueba.html">Log out</a></li>
                 </ul>
             </nav>
 
@@ -40,10 +42,22 @@
                     <h2>Welcome, <span th:text="${user.username}"></span>!</h2>
                     <p>User, <span th:text="${user.rol}"></span>!</p>
                 </div>
-                <div class="col-5 col-12-medium" th:if="${user.getRol() == user.getRol().ADMIN}">
-                    <form action="/welcome/admin" method="get">
-                        <button type="submit" style="width: 360px;"><a class="button large icon solid fa-arrow-circle-right" style="text-align: left;">Admin Panel</a></button>
-                    </form>
+                <div class="col-4 col-12-medium">
+                </div>
+                <div class="col-4 card">
+                    <h3>Estado de la cuenta</h3>
+                    <h3>$ XXX.XXX,XX</h3>
+                    <h3>U$D XXX,XX</h3>
+                </div>
+                <div class="col-4 col-12-medium">
+
+                    <button type="submit" class="button large icon solid fa-exchange-alt" style="text-align: left; font-size: 20px;">Transferencias</button>
+                    <button type="submit" class="button large icon solid fa-money-bill" style="text-align: left; font-size: 20px;">Pago de servicios</button>
+
+                </div>
+                <div class="col-4 col-12-medium">
+                    <button type="submit" class="button large icon solid fa-handshake" style="text-align: left; font-size: 20px;">Prestamos</button>
+                    <button type="submit" class="button large icon solid fa-shield-alt" style="text-align: left; font-size: 20px;">Seguros</button>
                 </div>
             </div>
         </div>
@@ -52,12 +66,12 @@
 
 <!-- Scripts -->
 
-<script src="/json/jquery.min.js"></script>
-<script src="/json/jquery.dropotron.min.js"></script>
-<script src="/json/browser.min.js"></script>
-<script src="/json/breakpoints.min.js"></script>
-<script src="/json/util.js"></script>
-<script src="/json/main.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
 
 </body>
 </html>

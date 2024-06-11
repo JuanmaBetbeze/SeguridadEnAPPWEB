@@ -87,6 +87,26 @@ input, select, textarea {
 		box-sizing: inherit;
 	}
 
+    .card {
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 4px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+        margin-top: 0;
+    }
+
+    .card p {
+        margin-bottom: 10px;
+    }
+
+    .card ul {
+        padding-left: 20px;
+    }
+
 	body {
 		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0)), url("images/bg01.png");
 		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0)), url("images/bg01.png");
