@@ -47,6 +47,7 @@ public class UserController {
     @GetMapping("/welcome")
     public String showWelcomePage(HttpServletRequest request, Model model) {
         CustomUser user = (CustomUser) request.getSession().getAttribute("user");
+        user=customUserService.findUserByName(user.getUsername());
         if (user == null) {
             return "redirect:/login";
         }
@@ -62,6 +63,7 @@ public class UserController {
                 }
             }
         }
+        customUserService.setCreditCard(user);
         model.addAttribute("user", user);
         return "welcomeprueba";
     }
@@ -73,8 +75,6 @@ public class UserController {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("isAdmin".equals(cookie.getName())) {
-                    //cookie.setValue("false");
-                    //response.addCookie(cookie);
                     response.resetBuffer();
                 }
             }
@@ -87,6 +87,7 @@ public class UserController {
     @GetMapping("/welcome/admin")
     public String showAdminPage(HttpServletRequest request, Model model) {
         CustomUser user = (CustomUser) request.getSession().getAttribute("user");
+        user=customUserService.findUserByName(user.getUsername());
         if (user == null || user.getRol() != Rol.ADMIN) {
             return "redirect:/login";
         }
@@ -94,5 +95,53 @@ public class UserController {
         return "adminprueba";
     }
 
+    @GetMapping("/cuenta")
+    public String showMiCuenta(HttpServletRequest request, Model model) {
+        CustomUser user = (CustomUser) request.getSession().getAttribute("user");
+        user=customUserService.findUserByName(user.getUsername());
+        if (user == null ) {
+            return "redirect:/login";
+        }
+        customUserService.setCreditCard(user);
+        model.addAttribute("user", user);
+        return "micuenta";
+    }
+
+    @GetMapping("/user/transfer")
+    public String showTransferPage(HttpServletRequest request, Model model) {
+        CustomUser user = (CustomUser) request.getSession().getAttribute("user");
+        user=customUserService.findUserByName(user.getUsername());
+        if (user == null ) {
+            return "redirect:/login";
+        }
+        customUserService.setCreditCard(user);
+        model.addAttribute("user", user);
+        return "transferenciaprueba";
+    }
+
+    @PostMapping("/user/transfer")
+    public String transferMoney(@RequestParam("username") String username,
+                                @RequestParam("monto") String monto,
+                                @RequestParam("destinatario") String destinatario,
+                                @RequestParam("cvv") String cvv,
+                                Model model) {
+        try {
+
+            int cvvInt = Integer.parseInt(cvv);
+            double amount = Double.parseDouble(monto);
+
+            customUserService.transferMoney(username, destinatario, cvvInt, amount);
+            // CREAR MENSAJE DE TRANSFERENCIA CORRECTA
+            return "redirect:/welcome";
+        } catch (RuntimeException e) {
+
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("monto", monto);
+            model.addAttribute("destinatario", destinatario);
+            CustomUser user=customUserService.findUserByName(username);
+            model.addAttribute("user",user);
+            return "transferenciaprueba";
+        }
+    }
 
 }

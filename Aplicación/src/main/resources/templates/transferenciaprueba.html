@@ -12,23 +12,26 @@
 <div class="wrapper fadeInDown">
     <div id="formContent" class="transferencia">
         <h1 style="font-size: 36px;">Transferencia</h1>
-
-  
-      <!--  Form -->
-      <form>
-        <div style="position: relative;">
-    		<input type="text" id="monto" class="fadeIn second" name="monto" placeholder="Monto" value="">
-    		<div style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%);">$</div>
-	</div>
-        <input type="text" id="destinatario" class="fadeIn third" name="destinatario" placeholder="CBU Destinatario">
-        <h1 id="tarjeta" class="fadeIn">Tarjeta:XXXX-XXXX-XXXX-1234</h1>
-        <input type="text" id="cvv" class="fadeIn" name="cvv" placeholder="CVV">
-   
-      </form>
-      
+        <!-- Mostrar el mensaje de error si existe -->
+        <div th:if="${errorMessage}" class="error-message" style="color: red;">
+            <p th:text="${errorMessage}"></p>
+        </div>
+        <!-- Formulario -->
+        <form action="/user/transfer" method="post">
+            <h1 id="montoDispo" class="fadeIn">Monto Disponible:
+                <span th:text="${user.creditCard.montoDisponible}"></span>
+            </h1>
+            <div style="position: relative;">
+                <input type="text" id="monto" class="fadeIn second" name="monto" placeholder="Monto" th:value="${monto}">
+                <div style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%);">$</div>
+            </div>
+            <input type="text" id="destinatario" class="fadeIn third" name="destinatario" placeholder="Nombre de Usuario Destinatario" th:value="${destinatario}">
+            <h1 id="tarjeta" class="fadeIn">Tarjeta:<span th:text="${user.creditCard.getMaskedCardNumber()}"></span></h1>
+            <input type="text" id="cvv" class="fadeIn" name="cvv" placeholder="CVV">
+            <!-- Campo oculto para el nombre del usuario -->
+            <input type="hidden" name="username" th:value="${user.username}">
+            <input type="submit" class="fadeIn fourth" value="Transferir">
+        </form>
     </div>
-    <input type="submit" class="fadeIn fourth" value="Transferir">
-    </div>
-   
-  </div>
+</div>
 </html>

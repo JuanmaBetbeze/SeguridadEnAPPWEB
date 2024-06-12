@@ -61,7 +61,6 @@ public class CustomUserService {
             }
             String hashedPassword = hashPasswordWithMD5(userId, password);
             String sql = "SELECT * FROM custom_user WHERE username = '" + username + "' AND password = '" + hashedPassword + "'";
-            System.out.println("Generated SQL: " + sql);
             return jdbcTemplate.query(sql, rs -> {
                 if (rs.next()) {
                     CustomUser user = new CustomUser();
@@ -151,7 +150,7 @@ public class CustomUserService {
             customUserRepository.save(customUser);
         }
     }
-    public void addCreditCardToUser(String userName, String cardNumber, String cardHolderName,int cvv,int montoDispo) {
+    public void addCreditCardToUser(String userName, String cardNumber, String cardHolderName,int cvv,double montoDispo) {
         CustomUser user = customUserRepository.findByUsername(userName);
         if(user==null) throw new RuntimeException("User not found");
         CreditCard creditCard = new CreditCard();
@@ -170,10 +169,8 @@ public class CustomUserService {
         customUserRepository.save(user);
     }
 
-    public CreditCard getCreditCardForUser(Integer userId) {
-        return creditCardRepository.findByCustomUserId(userId);
-    }
-    public void transferMoney(String usernameINI,String usernameFIN,int cvv,int amount){
+
+    public void transferMoney(String usernameINI,String usernameFIN,int cvv,double amount){
         CustomUser user1 = customUserRepository.findByUsername(usernameINI);
         CustomUser user2 = customUserRepository.findByUsername(usernameFIN);
         if(user1==null || user2==null)throw new RuntimeException("User not found");
@@ -199,5 +196,15 @@ public class CustomUserService {
                 }
             }
         }
+    }
+    public void setCreditCard(CustomUser customUser){
+        customUser.setCreditCard(creditCardRepository.findByCustomUserId(customUser.getId()));
+    }
+    public CustomUser findUserByName(String nombreUsuario){
+        CustomUser user = customUserRepository.findByUsername(nombreUsuario);
+        if (user==null){
+            throw new RuntimeException("User not found");
+        }
+        else return user;
     }
 }

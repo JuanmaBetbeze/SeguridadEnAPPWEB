@@ -21,15 +21,7 @@ public class CreditCard {
     @Max(999)
     private int cvv;
 
-    public int getMontoDisponible() {
-        return montoDisponible;
-    }
-
-    public void setMontoDisponible(int montoDisponible) {
-        this.montoDisponible = montoDisponible;
-    }
-
-    private int montoDisponible;
+     private double montoDisponible;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -81,5 +73,12 @@ public class CreditCard {
 
     public void setCustomUser(CustomUser customUser) {
         this.customUser = customUser;
+    }
+    public double getMontoDisponible() {
+        return montoDisponible;
+    }
+
+    public void setMontoDisponible(double montoDisponible) {
+        this.montoDisponible = montoDisponible;
     }
 }
