@@ -202,9 +202,13 @@ public class CustomUserService {
     }
     public CustomUser findUserByName(String nombreUsuario){
         CustomUser user = customUserRepository.findByUsername(nombreUsuario);
+
         if (user==null){
             throw new RuntimeException("User not found");
         }
-        else return user;
+        else {
+            setCreditCard(user);
+            return user;
+        }
     }
 }

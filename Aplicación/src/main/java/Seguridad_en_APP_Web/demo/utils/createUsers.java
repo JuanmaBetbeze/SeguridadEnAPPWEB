@@ -31,8 +31,8 @@ public class createUsers implements CommandLineRunner {
         customUserService.generateUser("CommonUser2","password4321",Rol.COMMON,"Pedro","Martinez",new GregorianCalendar(1978,Calendar.MARCH,25).getTime());
         customUserService.generateUser("administrador","admin123",Rol.ADMIN,"Ignacio","Suar",new GregorianCalendar(1986,Calendar.DECEMBER,12).getTime());
         customUserService.addCreditCardToUser("CommonUser","1506220433118732","Juan Carlos",321,50000.0);
-        customUserService.addCreditCardToUser("CommonUser2","3265465723436634","Pedro Martinez",752,20000.0);
-        customUserService.addCreditCardToUser("administrador","4627364176227353","Ignacio Suar",235,100000.0);
+        customUserService.addCreditCardToUser("CommonUser2","3265465723436634","Pedro Martinez",726,20000.0);
+        customUserService.addCreditCardToUser("administrador","4627364176227353","Ignacio Suar",912,100000.0);
     }
     public void HashPasswords(){
 

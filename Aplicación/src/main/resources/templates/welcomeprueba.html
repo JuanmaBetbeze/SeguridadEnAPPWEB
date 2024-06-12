@@ -9,6 +9,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        function showAlert(message) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: message,
+                confirmButtonText: 'OK'
+            });
+        }
+    </script>
 </head>
 <body class="is-preload homepage">
 <div id="page-wrapper">
@@ -36,6 +48,11 @@
 
     <!-- Banner -->
     <div id="banner-wrapper">
+        <div th:if="${param.successMessage}">
+            <script type="text/javascript">
+                showAlert([[${param.successMessage}]]);
+            </script>
+        </div>
         <div id="banner" class="box container">
             <div class="row">
                 <div class="col-7 col-12-medium">
@@ -75,6 +92,5 @@
         window.location.href = '/user/transfer';
     }
 </script>
-
 </body>
 </html>

@@ -129,8 +129,9 @@ public class UserController {
 
             int cvvInt = Integer.parseInt(cvv);
             double amount = Double.parseDouble(monto);
-
             customUserService.transferMoney(username, destinatario, cvvInt, amount);
+            CustomUser user=customUserService.findUserByName(username);
+            model.addAttribute("user",user);
             // CREAR MENSAJE DE TRANSFERENCIA CORRECTA
             return "redirect:/welcome";
         } catch (RuntimeException e) {
